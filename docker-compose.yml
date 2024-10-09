@@ -1,0 +1,9 @@
+services:
+  jangcar:
+    container_name: jangcar
+    image: postgres:latest
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - 5434:5432
