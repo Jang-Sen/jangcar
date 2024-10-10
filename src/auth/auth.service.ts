@@ -1,11 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { CreateUserDto } from '../user/dto/create-user.dto';
 import { LoginUserDto } from '../user/dto/login-user.dto';
+import { MailService } from '../mail/mail.service';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly mailService: MailService,
+  ) {}
 
   // 회원가입 로직
   async signup(dto: CreateUserDto) {
@@ -17,6 +22,29 @@ export class AuthService {
 
   // 로그인 로직
   async login(dto: LoginUserDto) {
-    await this.userService.findUserBy('email', dto.email);
+    // 메일 체크
+    const user = await this.userService.findUserBy('email', dto.email);
+
+    // 암호화 된 비밀번호 체크
+    const match = await bcrypt.compare(dto.password, user.password);
+
+    if (!match) {
+      throw new HttpException(
+        '비밀번호가 일치하지 않습니다.',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    return user;
+  }
+
+  // 회원가입 후 메일 전송
+  async signupMail(email: string) {
+    await this.mailService.sendMail({
+      to: email,
+      subject: '안녕하세요 장카입니다.',
+      text: '장카의 회원이 되어주셔서 감사드립니다.',
+      html: '<h3>잘 부탁드립니다.</h3>',
+    });
   }
 }

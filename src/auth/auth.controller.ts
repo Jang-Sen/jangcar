@@ -10,7 +10,10 @@ export class AuthController {
   // 회원가입 API
   @Post('signup')
   async signup(@Body() dto: CreateUserDto) {
-    return await this.authService.signup(dto);
+    const user = await this.authService.signup(dto);
+    await this.authService.signupMail(user.email);
+
+    return user;
   }
 
   // 로그인 API
