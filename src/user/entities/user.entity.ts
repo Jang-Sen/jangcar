@@ -1,7 +1,8 @@
 import { BeforeInsert, Column, Entity } from 'typeorm';
-import { Base } from '../../car/entities/base.entity';
 import * as bcrypt from 'bcrypt';
 import * as gravatar from 'gravatar';
+import { Exclude } from 'class-transformer';
+import { Base } from '@car/entities/base.entity';
 
 @Entity()
 export class User extends Base {
@@ -9,13 +10,14 @@ export class User extends Base {
   public userName: string;
 
   @Column()
-  public password: string;
+  @Exclude()
+  public password?: string;
 
   @Column({ unique: true })
   public email: string;
 
-  @Column()
-  public phone: number;
+  @Column({ nullable: true })
+  public phone?: number;
 
   @Column({ nullable: true })
   public profileImg?: string;

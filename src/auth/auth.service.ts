@@ -1,12 +1,12 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { UserService } from '../user/user.service';
-import { CreateUserDto } from '../user/dto/create-user.dto';
-import { LoginUserDto } from '../user/dto/login-user.dto';
-import { MailService } from '../mail/mail.service';
 import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { TokenPayloadInterface } from './interface/tokenPayload.interface';
+import { UserService } from '@user/user.service';
+import { MailService } from '@mail/mail.service';
+import { CreateUserDto } from '@user/dto/create-user.dto';
+import { LoginUserDto } from '@user/dto/login-user.dto';
+import { TokenPayloadInterface } from '@auth/interface/tokenPayload.interface';
 
 @Injectable()
 export class AuthService {
@@ -20,7 +20,6 @@ export class AuthService {
   // 회원가입 로직
   async signup(dto: CreateUserDto) {
     const user = await this.userService.create(dto);
-    user.password = undefined;
 
     return user;
   }

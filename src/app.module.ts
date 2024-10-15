@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from '@hapi/joi';
-import { CarModule } from './car/car.module';
-import { DbModule } from './db/db.module';
-import { UserModule } from './user/user.module';
-import { AuthModule } from './auth/auth.module';
-import { MailModule } from './mail/mail.module';
+import { AppController } from '@root/app.controller';
+import { AppService } from '@root/app.service';
+import { DbModule } from '@db/db.module';
+import { CarModule } from '@car/car.module';
+import { UserModule } from '@user/user.module';
+import { AuthModule } from '@auth/auth.module';
+import { MailModule } from '@mail/mail.module';
 
 @Module({
   imports: [

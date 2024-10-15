@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "baseUrl": "/",
+    "paths": {
+      "@root/*": [
+        "./src/*"
+      ],
+      "@db/*": [
+        "./src/db/*"
+      ],
+      "@mail/*": [
+        "./src/mail/*"
+      ],
+      "@auth/*": [
+        "./src/auth/*"
+      ],
+      "@user/*": [
+        "./src/user/*"
+      ],
+      "@car/*": [
+        "./src/car/*"
+      ]
+    }
+  }
+}

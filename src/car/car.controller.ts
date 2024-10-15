@@ -7,10 +7,12 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { CarService } from './car.service';
-import { CreateCarDto } from './dto/create-car.dto';
-import { UpdateCarDto } from './dto/update-car.dto';
+import { ApiBody, ApiTags } from '@nestjs/swagger';
+import { CarService } from '@car/car.service';
+import { CreateCarDto } from '@car/dto/create-car.dto';
+import { UpdateCarDto } from '@car/dto/update-car.dto';
 
+@ApiTags('car')
 @Controller('car')
 export class CarController {
   constructor(private readonly carService: CarService) {}
@@ -29,12 +31,14 @@ export class CarController {
 
   // 등록 API
   @Post('/create')
+  @ApiBody({ type: CreateCarDto })
   async create(@Body() dto: CreateCarDto) {
     return await this.carService.create(dto);
   }
 
   // 수정 API
   @Put('/:id')
+  @ApiBody({ type: CreateCarDto })
   async update(@Param('id') id: string, @Body() dto: UpdateCarDto) {
     return await this.carService.update(id, dto);
   }
