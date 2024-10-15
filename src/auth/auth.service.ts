@@ -4,12 +4,17 @@ import { CreateUserDto } from '../user/dto/create-user.dto';
 import { LoginUserDto } from '../user/dto/login-user.dto';
 import { MailService } from '../mail/mail.service';
 import * as bcrypt from 'bcrypt';
+import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
+import { TokenPayloadInterface } from './tokenPayload.interface';
 
 @Injectable()
 export class AuthService {
   constructor(
+    private readonly configService: ConfigService,
     private readonly userService: UserService,
     private readonly mailService: MailService,
+    private readonly jwtService: JwtService,
   ) {}
 
   // 회원가입 로직
@@ -46,5 +51,16 @@ export class AuthService {
       text: '장카의 회원이 되어주셔서 감사드립니다.',
       html: '<h3>잘 부탁드립니다.</h3>',
     });
+  }
+
+  // Access Token 발행 로직
+  public generateAccessToken(userId: string) {
+    const payload: TokenPayloadInterface = { userId };
+    const accessToken = this.jwtService.sign(payload, {
+      secret: this.configService.get('ACCESS_TOKEN_SECRET'),
+      expiresIn: this.configService.get('ACCESS_TOKEN_TIME'),
+    });
+
+    return accessToken;
   }
 }

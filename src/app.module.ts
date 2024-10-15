@@ -21,6 +21,8 @@ import { MailModule } from './mail/mail.module';
         MAIL_SERVICE: Joi.string().required(),
         MAIL_USER: Joi.string().required(),
         MAIL_PASSWORD: Joi.string().required(),
+        ACCESS_TOKEN_SECRET: Joi.string().required(),
+        ACCESS_TOKEN_TIME: Joi.string().required(),
       }),
     }),
     DbModule,

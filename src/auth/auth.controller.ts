@@ -19,6 +19,10 @@ export class AuthController {
   // 로그인 API
   @Post('login')
   async login(@Body() dto: LoginUserDto) {
-    return await this.authService.login(dto);
+    const user = await this.authService.login(dto);
+    // 로그인 시 토큰 발행
+    const token = this.authService.generateAccessToken(user.id);
+
+    return { user, token };
   }
 }
