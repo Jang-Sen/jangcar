@@ -6,7 +6,7 @@ import { MailService } from '../mail/mail.service';
 import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { TokenPayloadInterface } from './tokenPayload.interface';
+import { TokenPayloadInterface } from './interface/tokenPayload.interface';
 
 @Injectable()
 export class AuthService {
@@ -56,11 +56,10 @@ export class AuthService {
   // Access Token 발행 로직
   public generateAccessToken(userId: string) {
     const payload: TokenPayloadInterface = { userId };
-    const accessToken = this.jwtService.sign(payload, {
+
+    return this.jwtService.sign(payload, {
       secret: this.configService.get('ACCESS_TOKEN_SECRET'),
       expiresIn: this.configService.get('ACCESS_TOKEN_TIME'),
     });
-
-    return accessToken;
   }
 }
