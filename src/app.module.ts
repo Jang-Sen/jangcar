@@ -8,6 +8,7 @@ import { CarModule } from '@car/car.module';
 import { UserModule } from '@user/user.module';
 import { AuthModule } from '@auth/auth.module';
 import { MailModule } from '@mail/mail.module';
+import { RedisModule } from './redis/redis.module';
 
 @Module({
   imports: [
@@ -23,6 +24,10 @@ import { MailModule } from '@mail/mail.module';
         MAIL_PASSWORD: Joi.string().required(),
         ACCESS_TOKEN_SECRET: Joi.string().required(),
         ACCESS_TOKEN_TIME: Joi.string().required(),
+        REDIS_HOST: Joi.string().required(),
+        REDIS_PASSWORD: Joi.string().required(),
+        REDIS_PORT: Joi.number().required(),
+        REDIS_TTL: Joi.number().required(),
       }),
     }),
     DbModule,
@@ -30,6 +35,7 @@ import { MailModule } from '@mail/mail.module';
     UserModule,
     AuthModule,
     MailModule,
+    RedisModule,
   ],
   controllers: [AppController],
   providers: [AppService],

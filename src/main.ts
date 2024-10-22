@@ -6,6 +6,8 @@ import { AppModule } from '@root/app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.setGlobalPrefix('api');
+
   // Swagger
   const config = new DocumentBuilder()
     .setTitle('Jangcar API')
@@ -15,7 +17,7 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('api-swagger', app, document);
 
   // Validation
   app.useGlobalPipes(
@@ -26,7 +28,7 @@ async function bootstrap() {
   );
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
 
-  await app.listen(8013);
+  await app.listen(8011);
 }
 
 bootstrap();
