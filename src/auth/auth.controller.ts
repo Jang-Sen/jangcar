@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpStatus,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { AuthService } from '@auth/auth.service';
 import { CreateUserDto } from '@user/dto/create-user.dto';
@@ -6,6 +14,7 @@ import { LocalAuthGuard } from '@auth/guard/local-auth.guard';
 import { RequestUserInterface } from '@auth/interface/requestUser.interface';
 import { AccessTokenGuard } from '@auth/guard/accessToken.guard';
 import { LoginUserDto } from '@user/dto/login-user.dto';
+import { GoogleAuthGuard } from '@auth/guard/google-auth.guard';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -39,5 +48,22 @@ export class AuthController {
   @UseGuards(AccessTokenGuard)
   async authenticate(@Req() req: RequestUserInterface) {
     return req.user;
+  }
+
+  // 구글 로그인 API
+  @Get('/google')
+  @UseGuards(GoogleAuthGuard)
+  async googleLogin() {
+    return HttpStatus.OK;
+  }
+
+  // 구글 로그인 콜백 API
+  @Get('/google/callback')
+  @UseGuards(GoogleAuthGuard)
+  async googleCallback(@Req() req: RequestUserInterface) {
+    const user = req.user;
+    const token = this.authService.generateAccessToken(user.id);
+
+    return { user, token };
   }
 }

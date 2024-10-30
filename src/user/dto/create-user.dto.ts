@@ -6,24 +6,31 @@ import {
   IsString,
   MinLength,
 } from 'class-validator';
+import { Provider } from '@user/entities/provider.enum';
 
 export class CreateUserDto {
-  @ApiProperty({ example: '홍길동' })
   @IsString()
   @IsNotEmpty()
   @MinLength(2)
+  @ApiProperty({ example: '홍길동' })
   userName: string;
 
-  @ApiProperty({ example: '123456a!' })
   @IsString()
   @MinLength(7)
+  @ApiProperty({ example: '123456a!' })
   password?: string;
 
-  @ApiProperty({ example: 'email@exam.com' })
   @IsEmail()
+  @ApiProperty({ example: 'email@exam.com' })
   email: string;
 
-  @ApiProperty({ example: 1012345678 })
   @IsNumber()
-  phone: number;
+  @ApiProperty({ example: 1012345678 })
+  phone?: number;
+
+  @IsString()
+  provider?: Provider;
+
+  @IsString()
+  profileImg?: string;
 }
