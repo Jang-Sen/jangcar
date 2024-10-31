@@ -16,6 +16,7 @@ import { AccessTokenGuard } from '@auth/guard/accessToken.guard';
 import { LoginUserDto } from '@user/dto/login-user.dto';
 import { GoogleAuthGuard } from '@auth/guard/google-auth.guard';
 import { KakaoAuthGuard } from '@auth/guard/kakao-auth.guard';
+import { NaverAuthGuard } from '@auth/guard/naver-auth.guard';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -68,15 +69,34 @@ export class AuthController {
     return { user, token };
   }
 
+  // 카카오 로그인 API
   @Get('/kakao')
   @UseGuards(KakaoAuthGuard)
   async kakaoLogin() {
     return HttpStatus.OK;
   }
 
+  // 카카오 로그인 콜백 API
   @Get('/kakao/callback')
   @UseGuards(KakaoAuthGuard)
   async kakaoCallback(@Req() req: RequestUserInterface) {
+    const user = req.user;
+    const token = this.authService.generateAccessToken(user.id);
+
+    return { user, token };
+  }
+
+  // 네이버 로그인 API
+  @Get('/naver')
+  @UseGuards(NaverAuthGuard)
+  async naverLogin() {
+    return HttpStatus.OK;
+  }
+
+  // 네이버 로그인 콜백 API
+  @Get('/naver/callback')
+  @UseGuards(NaverAuthGuard)
+  async naverCallback(@Req() req: RequestUserInterface) {
     const user = req.user;
     const token = this.authService.generateAccessToken(user.id);
 
