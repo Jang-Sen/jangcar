@@ -8,6 +8,7 @@ import { LocalAuthStrategy } from '@auth/strategy/local-auth.strategy';
 import { AccessTokenStrategy } from '@auth/strategy/accessToken.strategy';
 import { MailModule } from '@mail/mail.module';
 import { GoogleAuthStrategy } from '@auth/strategy/google-auth.strategy';
+import { KakaoAuthStrategy } from '@auth/strategy/kakao-auth.strategy';
 
 @Module({
   imports: [ConfigModule, UserModule, MailModule, JwtModule.register({})],
@@ -17,6 +18,7 @@ import { GoogleAuthStrategy } from '@auth/strategy/google-auth.strategy';
     LocalAuthStrategy,
     AccessTokenStrategy,
     GoogleAuthStrategy,
+    KakaoAuthStrategy,
   ],
 })
 export class AuthModule {}

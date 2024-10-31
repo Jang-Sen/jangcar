@@ -19,9 +19,7 @@ export class AuthService {
 
   // 회원가입 로직
   async signup(dto: CreateUserDto) {
-    const user = await this.userService.create(dto);
-
-    return user;
+    return await this.userService.create(dto);
   }
 
   // 로그인 로직
