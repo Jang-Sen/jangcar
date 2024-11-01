@@ -13,6 +13,7 @@ async function bootstrap() {
     .setTitle('Jangcar API')
     .setDescription('Jangcar API Description')
     .setVersion('1.0')
+    .addBearerAuth()
     .addTag('Jangcar')
     .build();
 

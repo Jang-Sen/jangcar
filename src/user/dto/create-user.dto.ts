@@ -7,6 +7,8 @@ import {
   MinLength,
 } from 'class-validator';
 import { Provider } from '@user/entities/provider.enum';
+import { Term } from '@root/term/entities/term.entity';
+import { CreateTermDto } from '@root/term/dto/create-term.dto';
 
 export class CreateUserDto {
   @IsString()
@@ -33,4 +35,7 @@ export class CreateUserDto {
 
   @IsString()
   profileImg?: string;
+
+  @ApiProperty({ type: CreateTermDto })
+  term?: Term;
 }
