@@ -10,6 +10,7 @@ import { MailModule } from '@mail/mail.module';
 import { GoogleAuthStrategy } from '@auth/strategy/google-auth.strategy';
 import { KakaoAuthStrategy } from '@auth/strategy/kakao-auth.strategy';
 import { NaverAuthStrategy } from '@auth/strategy/naver-auth.strategy';
+import { RefreshTokenStrategy } from '@auth/strategy/refreshToken.strategy';
 
 @Module({
   imports: [ConfigModule, UserModule, MailModule, JwtModule.register({})],
@@ -18,6 +19,7 @@ import { NaverAuthStrategy } from '@auth/strategy/naver-auth.strategy';
     AuthService,
     LocalAuthStrategy,
     AccessTokenStrategy,
+    RefreshTokenStrategy,
     GoogleAuthStrategy,
     KakaoAuthStrategy,
     NaverAuthStrategy,

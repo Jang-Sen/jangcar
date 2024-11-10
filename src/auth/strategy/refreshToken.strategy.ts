@@ -1,13 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Req } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { ConfigService } from '@nestjs/config';
 import { UserService } from '@user/user.service';
+import { RequestUserInterface } from '@auth/interface/requestUser.interface';
 import { TokenPayloadInterface } from '@auth/interface/tokenPayload.interface';
 import { Request } from 'express';
 
 @Injectable()
-export class AccessTokenStrategy extends PassportStrategy(Strategy) {
+export class RefreshTokenStrategy extends PassportStrategy(
+  Strategy,
+  'jwt-refresh-token',
+) {
   constructor(
     private readonly configService: ConfigService,
     private readonly userService: UserService,
@@ -15,16 +19,24 @@ export class AccessTokenStrategy extends PassportStrategy(Strategy) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
         (req: Request) => {
-          return req?.cookies?.Authentication;
+          return req?.cookies?.Refresh;
         },
         ExtractJwt.fromAuthHeaderAsBearerToken(),
       ]),
-      secretOrKey: configService.get('ACCESS_TOKEN_SECRET'),
+      secretOrKey: configService.get('REFRESH_TOKEN_SECRET'),
+      passReqToCallback: true,
     });
   }
 
-  // id 값을 찾는 검증 함수
-  async validate(payload: TokenPayloadInterface) {
-    return this.userService.findUserBy('id', payload.userId);
+  async validate(
+    @Req() req: RequestUserInterface,
+    payload: TokenPayloadInterface,
+  ) {
+    const refreshToken = req?.cookies?.Refresh;
+
+    return await this.userService.matchRefreshToken(
+      payload.userId,
+      refreshToken,
+    );
   }
 }

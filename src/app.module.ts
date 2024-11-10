@@ -20,15 +20,21 @@ import { TermModule } from './term/term.module';
         POSTGRES_PASSWORD: Joi.string().required(),
         POSTGRES_DB: Joi.string().required(),
         POSTGRES_PORT: Joi.number().required(),
-        MAIL_SERVICE: Joi.string().required(),
-        MAIL_USER: Joi.string().required(),
-        MAIL_PASSWORD: Joi.string().required(),
-        ACCESS_TOKEN_SECRET: Joi.string().required(),
-        ACCESS_TOKEN_TIME: Joi.string().required(),
+
         REDIS_HOST: Joi.string().required(),
         REDIS_PASSWORD: Joi.string().required(),
         REDIS_PORT: Joi.number().required(),
         REDIS_TTL: Joi.number().required(),
+
+        ACCESS_TOKEN_TIME: Joi.string().required(),
+        ACCESS_TOKEN_SECRET: Joi.string().required(),
+        REFRESH_TOKEN_SECRET: Joi.string().required(),
+        REFRESH_TOKEN_TIME: Joi.string().required(),
+
+        MAIL_SERVICE: Joi.string().required(),
+        MAIL_USER: Joi.string().required(),
+        MAIL_PASSWORD: Joi.string().required(),
+
         GOOGLE_CLIENT_ID: Joi.string().required(),
         GOOGLE_CLIENT_SECRET: Joi.string().required(),
         GOOGLE_CALLBACK_URL: Joi.string().required(),

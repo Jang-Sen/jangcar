@@ -52,12 +52,40 @@ export class AuthService {
   }
 
   // Access Token 발행 로직
-  public generateAccessToken(userId: string) {
+  // public generateAccessToken(userId: string) {
+  //   const payload: TokenPayloadInterface = { userId };
+  //
+  //   return this.jwtService.sign(payload, {
+  //     secret: this.configService.get('ACCESS_TOKEN_SECRET'),
+  //     expiresIn: this.configService.get('ACCESS_TOKEN_TIME'),
+  //   });
+  // }
+
+  // Token 발행 로직
+  public generateToken(
+    tokenType: 'access' | 'refresh',
+    userId: string,
+  ): {
+    token: string;
+    cookie: string;
+  } {
     const payload: TokenPayloadInterface = { userId };
 
-    return this.jwtService.sign(payload, {
-      secret: this.configService.get('ACCESS_TOKEN_SECRET'),
-      expiresIn: this.configService.get('ACCESS_TOKEN_TIME'),
+    const secret = this.configService.get(
+      tokenType === 'access' ? 'ACCESS_TOKEN_SECRET' : 'REFRESH_TOKEN_SECRET',
+    );
+    const expiresIn = this.configService.get(
+      tokenType === 'access' ? 'ACCESS_TOKEN_TIME' : 'REFRESH_TOKEN_TIME',
+    );
+
+    const token = this.jwtService.sign(payload, {
+      secret,
+      expiresIn,
     });
+
+    const cookieName = tokenType === 'access' ? 'Authentication' : 'Refresh';
+    const cookie = `${cookieName}=${token}; Path=/; Max-Age=${expiresIn};`;
+
+    return { token, cookie };
   }
 }
