@@ -5,6 +5,7 @@ import {
   HttpStatus,
   Post,
   Req,
+  Res,
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
@@ -19,6 +20,7 @@ import { KakaoAuthGuard } from '@auth/guard/kakao-auth.guard';
 import { NaverAuthGuard } from '@auth/guard/naver-auth.guard';
 import { RefreshTokenGuard } from '@auth/guard/refreshToken.guard';
 import { UserService } from '@user/user.service';
+import { Response } from 'express';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -42,7 +44,7 @@ export class AuthController {
   @Post('/login')
   @UseGuards(LocalAuthGuard)
   @ApiBody({ type: LoginUserDto })
-  async login(@Req() req: RequestUserInterface) {
+  async login(@Req() req: RequestUserInterface, @Res() res: Response) {
     const user = req.user;
     // 로그인 시 토큰 발행
     const { cookie: accessCookie } = this.authService.generateToken(
@@ -54,9 +56,9 @@ export class AuthController {
 
     await this.userService.refreshTokenSaveRedis(user.id, refreshToken);
 
-    req.res.setHeader('Set-Cookie', [accessCookie, refreshCookie]);
+    res.setHeader('Set-Cookie', [accessCookie, refreshCookie]);
 
-    req.res.send(user);
+    res.send({ user });
   }
 
   // access token 갱신 API
@@ -73,7 +75,7 @@ export class AuthController {
 
     req.res.set('Set-Cookie', [accessCookie]);
 
-    req.res.send(user);
+    return { user };
   }
 
   // 로그인 이후, 토큰으로 유저 정보 찾는 API
