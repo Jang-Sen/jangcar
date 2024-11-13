@@ -1,5 +1,5 @@
 import { BeforeInsert, Column, Entity, JoinColumn, OneToOne } from 'typeorm';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import * as gravatar from 'gravatar';
 import { Exclude } from 'class-transformer';
 import { Base } from '@car/entities/base.entity';
