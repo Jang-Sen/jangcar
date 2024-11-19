@@ -23,7 +23,7 @@ export class AuthService {
     return await this.userService.create({ ...dto, provider: Provider.LOCAL });
   }
 
-  // 로그인 로직
+  // 로그인 검증 로직
   async login(dto: LoginUserDto) {
     // 메일 체크
     const user = await this.userService.findUserBy('email', dto.email);

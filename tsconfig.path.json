@@ -19,6 +19,15 @@
       ],
       "@car/*": [
         "./src/car/*"
+      ],
+      "@redis/*": [
+        "./src/redis/*"
+      ],
+      "@term/*": [
+        "./src/term/*"
+      ],
+      "common/*": [
+        "./src/common/*"
       ]
     }
   }

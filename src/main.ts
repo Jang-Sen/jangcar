@@ -7,8 +7,8 @@ import * as cookieParser from 'cookie-parser';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.setGlobalPrefix('api');
-  app.use(cookieParser());
+  app.setGlobalPrefix('api'); // url 에 api 추가
+  app.use(cookieParser()); // cookie
 
   // Swagger
   const config = new DocumentBuilder()

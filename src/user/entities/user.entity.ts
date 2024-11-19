@@ -38,6 +38,7 @@ export class User extends Base {
     array: true,
     default: [Role.USER],
   })
+  @Exclude()
   public roles: Role[];
 
   @OneToOne(() => Term, { cascade: true, eager: true })
