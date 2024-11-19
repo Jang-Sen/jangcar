@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
@@ -15,6 +16,9 @@ import { UpdateCarDto } from '@car/dto/update-car.dto';
 import { RoleGuard } from '@auth/guard/role.guard';
 import { Role } from '@user/entities/role.enum';
 import { ObjectIdDto } from '@root/common/dto/object-id.dto';
+import { PageDto } from 'common/dto/page.dto';
+import { Car } from '@car/entities/car.entity';
+import { PageOptionsDto } from 'common/dto/page-options.dto';
 
 @ApiTags('car')
 @Controller('car')
@@ -23,8 +27,8 @@ export class CarController {
 
   // 전체 찾기 API
   @Get('/all')
-  async getAll() {
-    return await this.carService.getAll();
+  async getAll(@Query() pageOptionsDto: PageOptionsDto): Promise<PageDto<Car>> {
+    return await this.carService.getAll(pageOptionsDto);
   }
 
   // 상세 찾기 API
