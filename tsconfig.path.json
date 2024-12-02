@@ -5,20 +5,23 @@
       "@root/*": [
         "./src/*"
       ],
+      "@auth/*": [
+        "./src/auth/*"
+      ],
+      "@car/*": [
+        "./src/car/*"
+      ],
+      "common/*": [
+        "./src/common/*"
+      ],
       "@db/*": [
         "./src/db/*"
       ],
       "@mail/*": [
         "./src/mail/*"
       ],
-      "@auth/*": [
-        "./src/auth/*"
-      ],
-      "@user/*": [
-        "./src/user/*"
-      ],
-      "@car/*": [
-        "./src/car/*"
+      "@minio-client/*": [
+        "./src/minio-client/*"
       ],
       "@redis/*": [
         "./src/redis/*"
@@ -26,8 +29,8 @@
       "@term/*": [
         "./src/term/*"
       ],
-      "common/*": [
-        "./src/common/*"
+      "@user/*": [
+        "./src/user/*"
       ]
     }
   }

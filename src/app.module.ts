@@ -8,8 +8,9 @@ import { CarModule } from '@car/car.module';
 import { UserModule } from '@user/user.module';
 import { AuthModule } from '@auth/auth.module';
 import { MailModule } from '@mail/mail.module';
-import { RedisModule } from './redis/redis.module';
-import { TermModule } from './term/term.module';
+import { RedisModule } from '@redis/redis.module';
+import { TermModule } from '@term/term.module';
+import { MinioClientModule } from '@minio-client/minio-client.module';
 
 @Module({
   imports: [
@@ -22,9 +23,15 @@ import { TermModule } from './term/term.module';
         POSTGRES_PORT: Joi.number().required(),
 
         REDIS_HOST: Joi.string().required(),
-        REDIS_PASSWORD: Joi.string().required(),
+        // REDIS_PASSWORD: Joi.string().required(),
         REDIS_PORT: Joi.number().required(),
         REDIS_TTL: Joi.number().required(),
+
+        MINIO_ENDPOINT: Joi.string().required(),
+        MINIO_PORT: Joi.number().required(),
+        MINIO_BUCKET: Joi.string().required(),
+        MINIO_ACCESS_KEY: Joi.string().required(),
+        MINIO_SECRET_KEY: Joi.string().required(),
 
         ACCESS_TOKEN_TIME: Joi.string().required(),
         ACCESS_TOKEN_SECRET: Joi.string().required(),
@@ -52,6 +59,7 @@ import { TermModule } from './term/term.module';
     MailModule,
     RedisModule,
     TermModule,
+    MinioClientModule,
   ],
   controllers: [AppController],
   providers: [AppService],
