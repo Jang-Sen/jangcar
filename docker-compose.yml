@@ -31,6 +31,7 @@ services:
     depends_on:
       - jangcar_postgres
       - jangcar_redis
+      - jangcar_minio
     networks:
       - jangcar_network
 
@@ -52,6 +53,17 @@ services:
       - .env
     ports:
       - ${REDIS_EXTERNAL_PORT}:${REDIS_PORT}
+    networks:
+      - jangcar_network
+
+  jangcar_minio:
+    container_name: jangcar_minio
+    image: bitnami/minio
+    env_file:
+      - .env
+    ports:
+      - "${MINIO_PORT}:${MINIO_PORT}"
+      - "9001:9001"
     networks:
       - jangcar_network
 
