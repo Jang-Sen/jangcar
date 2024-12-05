@@ -3,6 +3,7 @@ import {
   IsEmail,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsString,
   MinLength,
 } from 'class-validator';
@@ -18,6 +19,7 @@ export class CreateUserDto {
   userName: string;
 
   @IsString()
+  @IsOptional()
   @MinLength(7)
   @ApiProperty({ example: '123456a!' })
   password?: string;
@@ -27,15 +29,19 @@ export class CreateUserDto {
   email: string;
 
   @IsNumber()
+  @IsOptional()
   @ApiProperty({ example: 1012345678 })
   phone?: number;
 
   @IsString()
+  @IsOptional()
   provider?: Provider;
 
   @IsString()
+  @IsOptional()
   profileImg?: string;
 
+  @IsOptional()
   @ApiProperty({ type: CreateTermDto })
   term?: Term;
 }

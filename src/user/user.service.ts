@@ -11,6 +11,9 @@ import * as bcrypt from 'bcryptjs';
 import { PageDto } from 'common/dto/page.dto';
 import { PageOptionsDto } from 'common/dto/page-options.dto';
 import { PageMetaDto } from 'common/dto/page-meta.dto';
+import { MinioClientService } from '@minio-client/minio-client.service';
+import { UpdateUserDto } from '@user/dto/update-user.dto';
+import { BufferedFile } from '@minio-client/interface/file.model';
 
 @Injectable()
 export class UserService {
@@ -20,6 +23,7 @@ export class UserService {
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
     private readonly configService: ConfigService,
     private readonly jwtService: JwtService,
+    private readonly minioClientService: MinioClientService,
   ) {}
 
   // 유저 등록
@@ -83,5 +87,28 @@ export class UserService {
     if (match) {
       return user;
     }
+  }
+
+  // 토큰을 이용한 프로필 수정(사진 포함)
+  async updateProfile(
+    user: User,
+    dto: UpdateUserDto,
+    img?: BufferedFile,
+  ): Promise<string> {
+    const profileImgUrl = await this.minioClientService.uploadProfileImg(
+      user,
+      img,
+      'profile',
+    );
+    const result = await this.repository.update(user.id, {
+      ...dto,
+      profileImg: profileImgUrl,
+    });
+
+    if (!result.affected) {
+      throw new NotFoundException('회원을 찾을 수 없습니다.');
+    }
+
+    return '업데이트 완료';
   }
 }
