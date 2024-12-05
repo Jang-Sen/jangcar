@@ -12,6 +12,6 @@ export class Car extends Base {
   @Column()
   public category: string;
 
-  @Column()
-  public carImg: string;
+  @Column({ type: 'simple-array', nullable: true })
+  public carImg?: string[];
 }

@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsString } from 'class-validator';
+import { IsArray, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CreateCarDto {
   @ApiProperty({ example: 'K7' })
@@ -14,7 +14,9 @@ export class CreateCarDto {
   @IsString()
   category: string;
 
-  @ApiProperty()
-  @IsString()
-  carImg: string;
+  @IsString({ each: true })
+  @IsArray()
+  @IsOptional()
+  @ApiProperty({ example: ['image1.png', 'image2.jpg'] })
+  carImg?: string[];
 }

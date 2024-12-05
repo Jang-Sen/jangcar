@@ -7,12 +7,15 @@ import { UpdateCarDto } from '@car/dto/update-car.dto';
 import { PageDto } from 'common/dto/page.dto';
 import { PageOptionsDto } from 'common/dto/page-options.dto';
 import { PageMetaDto } from 'common/dto/page-meta.dto';
+import { MinioClientService } from '@minio-client/minio-client.service';
+import { BufferedFile } from '@minio-client/interface/file.model';
 
 @Injectable()
 export class CarService {
   constructor(
     @InjectRepository(Car)
     private repository: Repository<Car>,
+    private readonly minioClientService: MinioClientService,
   ) {}
 
   // 전체 찾기 로직
@@ -62,14 +65,23 @@ export class CarService {
   }
 
   // 수정 로직
-  async update(id: string, dto: UpdateCarDto) {
-    const car = await this.repository.update(id, dto);
+  async update(id: string, dto: UpdateCarDto, imgs?: BufferedFile[]) {
+    const car = await this.getCarById(id);
+    const carImgsUrl = await this.minioClientService.uploadCarImgs(
+      car,
+      imgs,
+      'car',
+    );
+    const updateResult = await this.repository.update(id, {
+      ...dto,
+      carImg: carImgsUrl,
+    });
 
     if (!car) {
       throw new NotFoundException('해당 차를 찾을 수 없습니다.');
     }
 
-    return car;
+    return updateResult;
   }
 
   // 삭제 로직

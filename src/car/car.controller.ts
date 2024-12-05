@@ -7,9 +7,11 @@ import {
   Post,
   Put,
   Query,
+  UploadedFiles,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
-import { ApiBody, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { CarService } from '@car/car.service';
 import { CreateCarDto } from '@car/dto/create-car.dto';
 import { UpdateCarDto } from '@car/dto/update-car.dto';
@@ -19,6 +21,8 @@ import { ObjectIdDto } from '@root/common/dto/object-id.dto';
 import { PageDto } from 'common/dto/page.dto';
 import { Car } from '@car/entities/car.entity';
 import { PageOptionsDto } from 'common/dto/page-options.dto';
+import { BufferedFile } from '@minio-client/interface/file.model';
+import { FilesInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('car')
 @Controller('car')
@@ -47,10 +51,32 @@ export class CarController {
 
   // 수정 API
   @Put('/:id')
-  @UseGuards(RoleGuard(Role.ADMIN))
+  // @UseGuards(RoleGuard(Role.ADMIN))
+  @UseInterceptors(FilesInterceptor('imgs'))
   @ApiBody({ type: CreateCarDto })
-  async update(@Param() { id }: ObjectIdDto, @Body() dto: UpdateCarDto) {
-    return await this.carService.update(id, dto);
+  @ApiBody({
+    description: '차 이미지 변경',
+    schema: {
+      type: 'object',
+      properties: {
+        imgs: {
+          type: 'array',
+          items: {
+            type: 'string',
+            format: 'binary',
+            description: 'carImgs',
+          },
+        },
+      },
+    },
+  })
+  @ApiConsumes('multipart/form-data')
+  async update(
+    @Param() { id }: ObjectIdDto,
+    @Body() dto?: UpdateCarDto,
+    @UploadedFiles() imgs?: BufferedFile[],
+  ) {
+    return await this.carService.update(id, dto, imgs);
   }
 
   // 삭제 API
