@@ -67,11 +67,9 @@ export class CarService {
   // 수정 로직
   async update(id: string, dto: UpdateCarDto, imgs?: BufferedFile[]) {
     const car = await this.getCarById(id);
-    const carImgsUrl = await this.minioClientService.uploadCarImgs(
-      car,
-      imgs,
-      'car',
-    );
+    const carImgsUrl = imgs.length
+      ? await this.minioClientService.uploadCarImgs(car, imgs, 'car')
+      : [];
     const updateResult = await this.repository.update(id, {
       ...dto,
       carImg: carImgsUrl,
