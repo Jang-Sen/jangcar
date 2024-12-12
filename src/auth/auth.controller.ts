@@ -21,9 +21,11 @@ import { NaverAuthGuard } from '@auth/guard/naver-auth.guard';
 import { RefreshTokenGuard } from '@auth/guard/refreshToken.guard';
 import { UserService } from '@user/user.service';
 import { Response } from 'express';
+import { ThrottlerGuard } from '@nestjs/throttler';
 
 @ApiTags('auth')
-@Controller('auth')
+@UseGuards(ThrottlerGuard)
+@Controller({ path: 'auth', version: '2' })
 export class AuthController {
   constructor(
     private readonly authService: AuthService,

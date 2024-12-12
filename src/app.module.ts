@@ -11,6 +11,8 @@ import { MailModule } from '@mail/mail.module';
 import { RedisModule } from '@redis/redis.module';
 import { TermModule } from '@term/term.module';
 import { MinioClientModule } from '@minio-client/minio-client.module';
+import { ThrottlerModule } from '@nestjs/throttler';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -52,6 +54,13 @@ import { MinioClientModule } from '@minio-client/minio-client.module';
         NAVER_CALLBACK_URL: Joi.string().required(),
       }),
     }),
+    ThrottlerModule.forRoot([
+      {
+        ttl: 30000,
+        limit: 10,
+      },
+    ]),
+    ScheduleModule.forRoot(),
     DbModule,
     CarModule,
     UserModule,
