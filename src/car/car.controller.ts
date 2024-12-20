@@ -18,11 +18,11 @@ import { UpdateCarDto } from '@car/dto/update-car.dto';
 import { RoleGuard } from '@auth/guard/role.guard';
 import { Role } from '@user/entities/role.enum';
 import { ObjectIdDto } from '@root/common/dto/object-id.dto';
-import { PageDto } from 'common/dto/page.dto';
 import { Car } from '@car/entities/car.entity';
-import { PageOptionsDto } from 'common/dto/page-options.dto';
 import { BufferedFile } from '@minio-client/interface/file.model';
 import { FilesInterceptor } from '@nestjs/platform-express';
+import { PageOptionsDto } from '@common/dto/page-options.dto';
+import { PageDto } from '@common/dto/page.dto';
 
 @ApiTags('car')
 @Controller('car')

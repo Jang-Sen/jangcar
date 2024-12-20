@@ -10,9 +10,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { UserService } from '@user/user.service';
-import { PageDto } from 'common/dto/page.dto';
 import { User } from '@user/entities/user.entity';
-import { PageOptionsDto } from 'common/dto/page-options.dto';
 import { RoleGuard } from '@auth/guard/role.guard';
 import { Role } from '@user/entities/role.enum';
 import { UpdateUserDto } from '@user/dto/update-user.dto';
@@ -21,6 +19,8 @@ import { RequestUserInterface } from '@auth/interface/requestUser.interface';
 import { AccessTokenGuard } from '@auth/guard/accessToken.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { PageOptionsDto } from '@common/dto/page-options.dto';
+import { PageDto } from '@common/dto/page.dto';
 
 @ApiTags('User')
 @Controller('user')

@@ -9,5 +9,6 @@ import { MinioClientModule } from '@minio-client/minio-client.module';
   imports: [TypeOrmModule.forFeature([Car]), MinioClientModule],
   controllers: [CarController],
   providers: [CarService],
+  exports: [CarService],
 })
 export class CarModule {}
