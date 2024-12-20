@@ -8,12 +8,12 @@ import { CACHE_MANAGER } from '@nestjs/common/cache';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
-import { PageDto } from 'common/dto/page.dto';
-import { PageOptionsDto } from 'common/dto/page-options.dto';
-import { PageMetaDto } from 'common/dto/page-meta.dto';
 import { MinioClientService } from '@minio-client/minio-client.service';
 import { UpdateUserDto } from '@user/dto/update-user.dto';
 import { BufferedFile } from '@minio-client/interface/file.model';
+import { PageOptionsDto } from '@common/dto/page-options.dto';
+import { PageMetaDto } from '@common/dto/page-meta.dto';
+import { PageDto } from '@common/dto/page.dto';
 
 @Injectable()
 export class UserService {

@@ -11,7 +11,10 @@
       "@car/*": [
         "./src/car/*"
       ],
-      "common/*": [
+      "@comment/*": [
+        "./src/comment/*"
+      ],
+      "@common/*": [
         "./src/common/*"
       ],
       "@db/*": [

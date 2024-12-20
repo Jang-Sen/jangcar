@@ -1,7 +1,7 @@
-import { ApiPropertyOptional } from '@nestjs/swagger';
 import { IsEnum, IsOptional } from 'class-validator';
-import { Order } from 'common/constant/order.constant';
-import { Sort } from 'common/constant/sort.constant';
+import { ApiPropertyOptional } from '@nestjs/swagger';
+import { Order } from '@common/constant/order.constant';
+import { Sort } from '@common/constant/sort.constant';
 
 export class PageOptionsDto {
   @IsOptional()

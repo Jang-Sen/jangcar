@@ -4,11 +4,11 @@ import { Repository } from 'typeorm';
 import { Car } from '@car/entities/car.entity';
 import { CreateCarDto } from '@car/dto/create-car.dto';
 import { UpdateCarDto } from '@car/dto/update-car.dto';
-import { PageDto } from 'common/dto/page.dto';
-import { PageOptionsDto } from 'common/dto/page-options.dto';
-import { PageMetaDto } from 'common/dto/page-meta.dto';
 import { MinioClientService } from '@minio-client/minio-client.service';
 import { BufferedFile } from '@minio-client/interface/file.model';
+import { PageOptionsDto } from '@common/dto/page-options.dto';
+import { PageMetaDto } from '@common/dto/page-meta.dto';
+import { PageDto } from '@common/dto/page.dto';
 
 @Injectable()
 export class CarService {

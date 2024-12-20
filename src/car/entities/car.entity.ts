@@ -1,5 +1,6 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 import { Base } from '@root/common/entities/base.entity';
+import { Comment } from '@comment/entities/comment.entity';
 
 @Entity()
 export class Car extends Base {
@@ -14,4 +15,7 @@ export class Car extends Base {
 
   @Column({ type: 'simple-array', nullable: true })
   public carImg?: string[];
+
+  @OneToMany(() => Comment, (comment) => comment.car)
+  public comments: Comment[];
 }
