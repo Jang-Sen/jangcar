@@ -17,7 +17,7 @@ async function bootstrap() {
   const configService: ConfigService = app.get(ConfigService);
   const port = configService.get('BACKEND_PORT');
 
-  app.setGlobalPrefix('api'); // url 에 api 추가
+  // app.setGlobalPrefix('api'); // url 에 api 추가
   app.use(cookieParser()); // cookie
 
   // Versioning
@@ -31,6 +31,7 @@ async function bootstrap() {
     .setTitle('Jangcar API')
     .setDescription('Jangcar API Description')
     .setVersion('1.0')
+    .addServer('/api')
     .addBearerAuth()
     .addTag('Jangcar')
     .build();
