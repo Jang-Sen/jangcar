@@ -19,6 +19,7 @@ async function bootstrap() {
 
   // app.setGlobalPrefix('api'); // url 에 api 추가
   app.use(cookieParser()); // cookie
+  app.enableCors(); // 허용된 ip 만 접속 가능하도록 설정
 
   // Versioning
   app.enableVersioning({
